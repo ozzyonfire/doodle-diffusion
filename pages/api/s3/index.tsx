@@ -6,7 +6,7 @@ import { NextApiHandler } from "next";
 const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
+  region: 'us-east-1'
 });
 
 const handler: NextApiHandler = async (req, res) => {
@@ -20,9 +20,11 @@ const handler: NextApiHandler = async (req, res) => {
     Body: buffer,
     ContentEncoding: "base64",
     ContentType: "image/png",
+    ACL: "public-read",
   };
 
   const response = await s3.upload(params).promise();
+
   return res.json(response);
 };
 

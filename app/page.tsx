@@ -1,5 +1,5 @@
 import Prompt, { getPrompt } from "@/components/Prompt";
-import SketchCanvas from "./SketchCanvas";
+import { Main } from "./Main";
 
 export default async function Home() {
   const prompt = await getPrompt();
@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <>
       <Prompt prompt={prompt} />
-      <SketchCanvas prompt={prompt} />
+      <Main prompt={prompt} />
     </>
   )
 }

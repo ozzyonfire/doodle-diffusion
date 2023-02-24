@@ -1,26 +1,57 @@
 'use client';
-
-import ColourPicker from "@/components/ColourPicker";
-import { useRef, useState } from "react";
+import { uploadImage } from "@/hooks/images";
+import { useEffect, useRef, useState } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
+import ColourPicker from "./ColourPicker";
+import { SquareLoader } from "react-spinners";
 
-export default function SketchCanvas(props: {
-  prompt: string;
+export default function Sketch(props: {
+  onSubmit: (url: string, additionalPrompt: string) => void;
+  isProcessing: boolean;
 }) {
+  const {
+    isProcessing,
+    onSubmit
+  } = props;
   const [strokeWidth, setStrokeWidth] = useState(3);
   const [colour, setColour] = useState<string>("black");
   const [canvasColour, setCanvasColour] = useState("white");
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
+  const [additionalPrompt, setAdditionalPrompt] = useState("");
 
-  const handleExportImage = async () => {
+  useEffect(() => {
+    // check if there are paths in local storage
+    const pathsString = localStorage.getItem("paths");
+    if (pathsString) {
+      const paths = JSON.parse(pathsString);
+      canvasRef.current?.loadPaths(paths);
+    }
+
+    // check if there is a canvas colour in local storage
+    const canvasColour = localStorage.getItem("canvasColour");
+    if (canvasColour) {
+      setCanvasColour(canvasColour);
+    }
+  }, []);
+
+  const handleSubmitImage = async () => {
     if (canvasRef.current) {
       const data = await canvasRef.current.exportImage("png");
       console.log(data);
+      const response = await uploadImage(data);
+      const url = response.Location;
+      onSubmit(url, additionalPrompt);
+
+      const paths = await canvasRef.current.exportPaths();
+      localStorage.setItem("paths", JSON.stringify(paths, null, 2));
+
+      // save the canvas colour to local storage
+      localStorage.setItem("canvasColour", canvasColour);
     }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-center h-full gap-2">
       <div className="w-full max-w-[512px] aspect-square shadow-lg relative">
         <ReactSketchCanvas
           ref={canvasRef}
@@ -88,6 +119,32 @@ export default function SketchCanvas(props: {
             </div>
           </div>
         </div>
+      </div>
+      <div className="w-[512px] flex flex-col gap-1">
+        <label htmlFor="prompt" className="mr-2 sr-only">Additional prompt</label>
+        <input
+          id="prompt"
+          type="text"
+          value={additionalPrompt}
+          onChange={(e) => setAdditionalPrompt(e.target.value)}
+          className="bg-gray-800 text-gray-200 rounded-md px-2 py-1 w-full"
+          placeholder="cartoon, abstract, high-quality, etc..."
+        />
+        {/* show some helpful text */}
+        <div className="text-gray-400 text-sm">
+          <p>This text will be appended to the prompt, so you can customize the output.</p>
+        </div>
+      </div>
+      <div className="flex gap-1 items-center">
+        <button
+          type="button"
+          onClick={handleSubmitImage}
+          className={`bg-gray-800 text-gray-200 rounded-md px-2 py-1 ${isProcessing ? "opacity-50" : ""}`}
+          disabled={isProcessing}
+        >
+          Submit
+        </button>
+        {isProcessing && <SquareLoader size={20} color="white" />}
       </div>
     </div>
   );

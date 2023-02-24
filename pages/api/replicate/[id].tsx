@@ -1,16 +1,16 @@
 import { NextApiHandler } from "next";
-
-const API_HOST = "https://api.replicate.com";
+import { apiUrl, token } from "./index";
 
 const handler: NextApiHandler = async (req, res) => {
-  const response = await fetch(`${API_HOST}/v1/predictions/${req.query.id}`, {
+  const response = await fetch(`${apiUrl}/${req.query.id}`, {
     headers: {
-      Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
+      Authorization: `Token ${token}`,
       "Content-Type": "application/json",
     },
   });
   if (response.status !== 200) {
     let error = await response.json();
+    console.log('error', error);
     res.statusCode = 500;
     res.json({ detail: error.detail });
     return;

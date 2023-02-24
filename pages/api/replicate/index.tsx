@@ -1,9 +1,8 @@
 import { NextApiHandler } from "next";
 
-const apiUrl = "https://api.replicate.com/v1/predictions";
-const token = process.env.REPLICATE_API_KEY;
-
-const version = "435061a1b5a4c1e26740464bf786efdfa9cb3a3ac488595a2de23e143fdb0117";
+export const apiUrl = "https://api.replicate.com/v1/predictions";
+export const token = process.env.REPLICATE_API_KEY;
+export const version = "435061a1b5a4c1e26740464bf786efdfa9cb3a3ac488595a2de23e143fdb0117";
 
 const handler: NextApiHandler = async (req, res) => {
   const input = req.body;
