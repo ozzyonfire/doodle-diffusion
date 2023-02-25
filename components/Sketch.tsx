@@ -37,8 +37,9 @@ export default function Sketch(props: {
   const handleSubmitImage = async () => {
     if (canvasRef.current) {
       const data = await canvasRef.current.exportImage("png");
-      console.log(data);
-      const response = await uploadImage(data);
+      const response = await uploadImage({
+        image: data,
+      });
       const url = response.Location;
       onSubmit(url, additionalPrompt);
 

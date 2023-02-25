@@ -1,8 +1,9 @@
-import Prompt, { getPrompt } from "@/components/Prompt";
+import Prompt from "@/components/Prompt";
+import { getDailyPrompt } from "@/model/prompt";
 import { Main } from "./Main";
 
 export default async function Home() {
-  const prompt = await getPrompt();
+  const prompt = await getDailyPrompt();
 
   return (
     <>
