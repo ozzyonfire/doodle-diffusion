@@ -21,7 +21,7 @@ const fallbackPrompts = [
 ];
 
 export async function getPrompt() {
-  const prompt = "Provide a single funny prompt that can be used to draw a simple image. The prompt would result in a hilarious and enjoyable picture to be draw - like Drawful. Example: A monster at a tea party \n\n";
+  const prompt = "Provide a single funny prompt that can be used to draw a simple image. The prompt would result in a hilarious and enjoyable picture to be draw - like Drawful. The prompt should be short and simple enough to draw easily. Example: A monster at a tea party \n\n";
 
   try {
     const response = await openai.createCompletion({
@@ -45,7 +45,7 @@ export default function Prompt(props: {
 
   // render the prompt in nice big bold text
   return (
-    <div className="flex flex-col items-center justify-center h-full my-4">
+    <div className="flex flex-col items-center justify-center h-full mb-3">
       <h1 className="text-2xl font-bold text-white">
         {prompt}
       </h1>

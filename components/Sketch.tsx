@@ -61,7 +61,7 @@ export default function Sketch(props: {
           strokeColor={colour.toString()}
           canvasColor={canvasColour}
         />
-        <div className="left-full top-0 h-full absolute ml-4">
+        <div className="hidden md:block left-full top-0 h-full absolute ml-4">
           <div className="flex flex-col items-start h-full w-44 gap-1">
             {/* show a preview of the size of the stroke */}
             <div
@@ -121,7 +121,54 @@ export default function Sketch(props: {
           </div>
         </div>
       </div>
-      <div className="w-[512px] flex flex-col gap-1">
+      <div className="max-w-[512px] flex flex-col gap-1 items-center">
+        <div className="text-gray-400 text-sm flex items-center gap-2">
+          <div className="">
+            <label htmlFor="slider" className="inline mr-2 whitespace-nowrap">Stroke width</label>
+          </div>
+          <input
+            id="slider"
+            type="range"
+            min="1"
+            max="24"
+            value={strokeWidth}
+            onChange={(e) => setStrokeWidth(parseInt(e.target.value))}
+            className="flex-grow"
+          />
+          <div>
+            <div
+              style={{
+                height: `${strokeWidth}px`,
+                width: `${strokeWidth}px`,
+                backgroundColor: colour.toString(),
+              }}
+              className="rounded-full"
+            />
+          </div>
+        </div>
+        <div className="flex gap-1">
+          <button
+            type="button"
+            onClick={() => canvasRef.current?.undo()}
+            className="bg-gray-800 text-gray-200 rounded-md px-2 py-1"
+          >
+            Undo
+          </button>
+          <button
+            type="button"
+            onClick={() => canvasRef.current?.redo()}
+            className="bg-gray-800 text-gray-200 rounded-md px-2 py-1"
+          >
+            Redo
+          </button>
+          <button
+            type="button"
+            onClick={() => canvasRef.current?.clearCanvas()}
+            className="bg-gray-800 text-gray-200 rounded-md px-2 py-1"
+          >
+            Clear
+          </button>
+        </div>
         <label htmlFor="prompt" className="mr-2 sr-only">Additional prompt</label>
         <input
           id="prompt"
@@ -147,6 +194,7 @@ export default function Sketch(props: {
         </button>
         {isProcessing && <SquareLoader size={20} color="white" />}
       </div>
+      {isProcessing && <p className="text-gray-400 text-sm">This usually takes no more than 30 seconds...</p>}
     </div>
   );
 }

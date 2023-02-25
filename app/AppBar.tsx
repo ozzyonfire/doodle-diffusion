@@ -6,7 +6,7 @@ export default function AppBar() {
         <div className="relative flex items-center justify-center h-16">
           {/* Center the Logo and Title of the app */}
           <h1 className="text-2xl font-bold text-white">
-            Doodle App
+            Doodle Diffusion
           </h1>
         </div>
       </div>

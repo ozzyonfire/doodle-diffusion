@@ -19,3 +19,9 @@ export async function saveDoodle(doodle: DoodleInput) {
   const data = await response.json() as WithId<Doodle>;
   return data;
 }
+
+export async function getDoodleForUser(userId: string) {
+  const response = await fetch(`/api/doodle/user/${userId}`);
+  const data = await response.json() as WithId<Doodle>;
+  return data;
+}
