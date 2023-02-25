@@ -6,7 +6,9 @@ I created this project as a learning tool for a couple of topics I was intereste
 - TailwindCSS as the styles library
 
 This app uses amazon s3 storage to store and host the images that are generated.
-This app also uses a mongodb database to store some information - this was used to see how to integrate a mongodb db with the new app directory in Next.js 13
+This app also uses a mongodb database to store some information - this was used to see how to integrate a mongodb db with the new app directory in Next.js 13.
+
+The original idea for the project came from Replicate's example found here: https://github.com/replicate/scribble-diffusion
 
 ## Getting Started
 
