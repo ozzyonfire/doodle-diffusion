@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+I created this project as a learning tool for a couple of topics I was interested in.
+- Next.js app directory introduced in version 13
+- ControlNet and Stable Diffusion hosted on Replicate
+- TailwindCSS as the styles library
+
+This app uses amazon s3 storage to store and host the images that are generated.
+This app also uses a mongodb database to store some information - this was used to see how to integrate a mongodb db with the new app directory in Next.js 13
+
 ## Getting Started
 
 First, run the development server:
@@ -19,8 +27,6 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 
