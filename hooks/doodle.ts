@@ -7,7 +7,7 @@ export async function useDoodle(id: string) {
   return useSWR(id && `/api/doodle/${id}`, fetcher);
 }
 
-export interface DoodleInput extends Omit<Doodle, "date"> { }
+export interface DoodleInput extends Omit<Doodle, "date" | "upvotes" | "downvotes"> { }
 
 export async function saveDoodle(doodle: DoodleInput) {
   const response = await fetch("/api/doodle", {

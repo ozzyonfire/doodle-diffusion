@@ -2,7 +2,7 @@
 
 import Diffusion from "@/components/Diffusion";
 import Sketch from "@/components/Sketch";
-import { getDoodleForUser, saveDoodle } from "@/hooks/doodle";
+import { getDoodleForUser, saveDoodle, upvote } from "@/hooks/doodle";
 import { uploadImage } from "@/hooks/images";
 import { submitPrediction, usePrediction } from "@/hooks/predictions";
 import { useUserId } from "@/hooks/user";
@@ -51,10 +51,11 @@ export function Main(props: {
             input: prediction.input.image,
             output: response.Location,
             predictionId: prediction.id,
-            userId: userId || "",
-            upvotes: [userId || ""],
-            downvotes: [],
+            userId: userId || ""
           });
+          if (userId) {
+            upvote(saveResponse._id.toString(), userId);
+          }
           setDoodle(saveResponse);
         });
       }
