@@ -45,7 +45,7 @@ export default function Prompt(props: {
 
   // render the prompt in nice big bold text
   return (
-    <div className="flex flex-col items-center justify-center h-full mb-3">
+    <div className="flex flex-col items-center justify-center h-full">
       <h1 className="text-2xl font-bold text-white">
         {prompt}
       </h1>

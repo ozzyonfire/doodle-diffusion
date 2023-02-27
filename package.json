@@ -16,6 +16,7 @@
     "aws-sdk": "^2.1321.0",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "luxon": "^3.2.1",
     "mongodb": "^5.1.0",
     "next": "13.2",
     "openai": "^3.1.0",
@@ -29,6 +30,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/luxon": "^3.2.0",
     "@types/mongodb": "^4.0.7",
     "@types/react-color": "^3.0.6",
     "@types/uuid": "^9.0.1",
