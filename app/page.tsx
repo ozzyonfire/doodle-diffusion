@@ -3,7 +3,7 @@ import { getDailyPrompt } from "@/model/prompt";
 import { Metadata } from "next";
 import { Main } from "./Main";
 
-export const revalidate = 60 * 60; // revalidate every hour
+export const revalidate = 3600; // revalidate every hour
 
 export const metadata: Metadata = {
   title: "Doodle Diffusion",
