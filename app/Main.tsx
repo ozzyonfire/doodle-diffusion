@@ -2,36 +2,27 @@
 
 import Diffusion from "@/components/Diffusion";
 import Sketch from "@/components/Sketch";
-import { getDoodleForUser, saveDoodle } from "@/hooks/doodle";
+import { getDoodleForUser, saveDoodle, upvote } from "@/hooks/doodle";
 import { uploadImage } from "@/hooks/images";
 import { submitPrediction, usePrediction } from "@/hooks/predictions";
+import { useUserId } from "@/hooks/user";
 import { Doodle } from "@/model/doodle";
 import { WithId } from "mongodb";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
 
 export function Main(props: {
   prompt: string;
 }) {
   const { prompt } = props;
   const [predictionId, setPredictionId] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [doodle, setDoodle] = useState<WithId<Doodle> | null>(null);
   const [predictionStatus, setPredictionStatus] = useState<null | "starting" | "processing" | "succeeded" | "error">(null);
+  const userId = useUserId();
   const {
     data: prediction
   } = usePrediction(predictionId || "", {
     refreshInterval: predictionStatus === "processing" || predictionStatus === "starting" ? 1000 : 0,
   });
-
-  useEffect(() => {
-    // store a uuid to track the user in the database
-    if (!localStorage.getItem("userId")) {
-      const uuid = uuidv4();
-      localStorage.setItem("userId", uuid);
-    }
-    setUserId(localStorage.getItem("userId"));
-  }, []);
 
   useEffect(() => {
     if (userId) {
@@ -60,8 +51,11 @@ export function Main(props: {
             input: prediction.input.image,
             output: response.Location,
             predictionId: prediction.id,
-            userId: userId || "",
+            userId: userId || ""
           });
+          if (userId) {
+            upvote(saveResponse._id.toString(), userId);
+          }
           setDoodle(saveResponse);
         });
       }
@@ -87,16 +81,16 @@ export function Main(props: {
           doodle={doodle}
         />
         <div className="text-center max-w-[512px]">
-          <p>
-            Thank you for your doodle! You can share this doodle with your friends by clicking the share button. You can only submit one doodle per day.
+          <p className="text-gray-200">
+            Thank you for your daily doodle! Share this doodle with your friends!
           </p>
-          <button
-            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded inline-flex items-center"
-            onClick={() => setDoodle(null)}
-          >
-            Reset
-          </button>
         </div>
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded inline-flex items-center"
+          onClick={() => setDoodle(null)}
+        >
+          Reset
+        </button>
       </div>
     )
   }

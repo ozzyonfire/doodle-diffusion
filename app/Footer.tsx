@@ -2,8 +2,13 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
+<<<<<<< HEAD
     <footer className="w-full my-4">
       <div className="text-center lil-text mt-8 flex items-center gap-2 justify-center w-full">
+=======
+    <footer className="w-full my-4 px-2">
+      <div className="text-center lil-text mt-8 flex items-center gap-2 justify-center">
+>>>>>>> f7082c5dba46402ee9bc68046e7204e104848481
         <div className="inline-block py-3 px-4 bg-gray-800 rounded-lg">
           <Link
             href="https://github.com/ozzyonfire/doodle-diffusion"

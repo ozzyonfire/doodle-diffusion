@@ -4,7 +4,7 @@ import { NextApiHandler } from "next";
 const handler: NextApiHandler = async (req, res) => {
   // if this is a POST request, save the doodle to the database
   if (req.method === "POST") {
-    const { input, output, prompt, predictionId, userId } = req.body;
+    const { input, output, prompt, predictionId, userId, upvotes, downvotes } = req.body;
 
     const doodle: Doodle = {
       date: new Date().toISOString(),
@@ -12,7 +12,9 @@ const handler: NextApiHandler = async (req, res) => {
       input,
       output,
       predictionId,
-      userId
+      userId,
+      upvotes,
+      downvotes
     };
 
     const response = await saveDoodle(doodle);
